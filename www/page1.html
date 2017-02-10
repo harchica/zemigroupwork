@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/drawer.js"></script>
+    <link rel="stylesheet" href="css/drawer.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.1.3/iscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.1.0/js/drawer.min.js"></script>
+
+    
+<script>
+
+$(document).ready(function() {
+     $('.drawer').drawer();
+});
+
+$(function() {
+    var nav = $(".albo");
+    //表示位置
+    var navTop = nav.offset().top;
+    //ナビゲーションの高さ（シャドウの分だけ足してます）
+    var navHeight = nav.height()+10;
+    var showFlag = false;
+    nav.css('top', -navHeight+'px');
+    //ナビゲーションの位置まできたら表示
+    $(window).scroll(function () {
+        var winTop = $(this).scrollTop();
+        if (winTop >= navTop) {
+            if (showFlag == false) {
+                showFlag = true;
+                nav
+                    .addClass('fixed')
+                    .stop().animate({'top' : '0px'}, 200);
+            }
+        } else if (winTop <= navTop) {
+            if (showFlag) {
+                showFlag = false;
+                nav.stop().animate({'top' : -navHeight+'px'}, 200, function(){
+                    nav.removeClass('fixed');
+                });
+            }
+        }
+    });
+});
+
+$(function(){
+    var headerHight = 50; //ヘッダの高さ
+   // #で始まるアンカーをクリックした場合に処理
+   $('a[href^=#]').click(function() {
+      // スクロールの速度
+      var speed = 400; // ミリ秒
+      // アンカーの値取得
+      var href= $(this).attr("href");
+      // 移動先を取得
+      var target = $(href == "#" || href == "" ? 'html' : href);
+      // 移動先を数値で取得
+      var position = target.offset().top-headerHight;
+      // スムーススクロール
+      $('page1.html').animate({scrollTop:position}, speed, 'swing');
+      return false;
+   });
+});
+</script>
+     <script type="text/javascript">
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady () {
+         window.alert ('Loading Cordova is completed');
+      }
+
+      function onSuccess (imageURI) {
+        var largeImage = document.getElementById ('picture');
+        largeImage.style.display = 'block';
+        largeImage.src = imageURI;
+      }
+
+      function getPhoto () {
+        //Specify the source to get the photos.
+        navigator.camera.getPicture(onSuccess, onFail, 
+          { quality: 50,destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM });
+      }
+
+      function onFail (message) {
+          alert('An error occured: ' + message);
+      }
+    </script>
+
+
+    </script>
+</head>
+
+<body class="drawer drawer--left">
+ <header>
+     
+ 
+<!-- ハンバーガーボタン -->
+<button type="button" class="drawer-toggle drawer-hamburger">
+  <span class="sr-only">toggle navigation</span>
+  <span class="drawer-hamburger-icon"></span>
+</button>
+ 
+<nav class="drawer-nav">
+  <ul class="drawer-menu">
+     <!-- ドロワーメニューの中身 -->
+    <li class="drawerAc"><a class="linkname" href="index.html">
+     <br>
+    <img src="img/IdPhoto.png" width="80" height="80" style="border-radius:400px"; >
+    <br>@account</a></li>
+    <li class="drawerIn"><a class="linkname" href="index.html">GALLERY</a></li>
+    <li class="drawerIn"><a class="linkname" href="page2.html">PHOTO</a></li>
+    <li class="drawerIn"><a class="linkname" href="page1">FAVORITE</a></li>
+    
+</ul>
+</nav>
+ 
+<div class="albo">
+   
+   FAVORITE
+   
+</div>
+ </header>
+  
+</body>
+</html>
